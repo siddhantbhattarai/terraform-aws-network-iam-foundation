@@ -5,6 +5,19 @@ production-style network and identity baseline that later application projects
 reuse: a two-Availability-Zone VPC, public and private subnets, explicit
 routing, flow logs, a restricted workload security group, and workload IAM.
 
+## Problem this solves
+
+Application teams frequently start with flat networks and overly broad IAM
+permissions, making later security work expensive. This foundation creates clear
+network boundaries and a reusable workload identity before applications arrive.
+
+## When to use this architecture
+
+Use it as the base for small production workloads, multi-tier applications, and
+later container or database projects. It is deliberately a starting baseline:
+larger environments should add separate NAT gateways per AZ, VPC endpoints,
+network ACL requirements, and centralized multi-account governance.
+
 ## Architecture
 
 ![Secure network and IAM foundation architecture](diagrams/architecture.svg)
