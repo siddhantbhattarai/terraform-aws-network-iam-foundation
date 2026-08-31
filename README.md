@@ -78,6 +78,20 @@ terraform apply
 Choose your own `project_name`, `environment`, and non-overlapping `vpc_cidr`
 in `terraform.tfvars` before applying.
 
+## Local Floci plan check
+
+The default configuration targets AWS. For a local, no-create planning check
+against Floci, keep the default values in version control and run:
+
+```bash
+terraform init -backend=false
+terraform validate
+terraform plan -var=use_floci=true
+```
+
+This verifies Terraform's proposed resource graph locally. Set
+`use_floci=false` (the default) before planning or applying to AWS.
+
 ## Verification
 
 Use Terraform outputs:
