@@ -7,27 +7,22 @@ routing, flow logs, a restricted workload security group, and workload IAM.
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    Internet --> IGW[Internet gateway]
-    subgraph VPC[10.20.0.0/16 VPC]
-      subgraph AZ1[Availability Zone A]
-        PublicA[Public subnet]
-        PrivateA[Private subnet]
-      end
-      subgraph AZ2[Availability Zone B]
-        PublicB[Public subnet]
-        PrivateB[Private subnet]
-      end
-      IGW --> PublicA
-      IGW --> PublicB
-      NAT[NAT gateway - optional] --> IGW
-      PrivateA -. outbound when enabled .-> NAT
-      PrivateB -. outbound when enabled .-> NAT
-      VPC --> FlowLogs[VPC Flow Logs]
-    end
-    FlowLogs --> CW[CloudWatch Log Group]
-    IAM[IAM workload role + instance profile] -. least privilege .-> PrivateA
+![Secure network and IAM foundation architecture](diagrams/architecture.svg)
+
+## Repository structure
+
+```text
+.
+├── providers.tf              # AWS provider and AZ discovery
+├── locals.tf                 # Naming, subnet calculations, shared tags
+├── network.tf                # VPC, subnets, routes, IGW, optional NAT
+├── security.tf               # Workload security group
+├── iam.tf                    # Flow-log and workload roles/policies
+├── observability.tf          # CloudWatch log group and VPC Flow Logs
+├── variables.tf              # Deployment inputs
+├── outputs.tf                # IDs and ARNs for later projects
+├── terraform.tfvars.example  # Safe deployment values
+└── diagrams/architecture.svg # README infrastructure infographic
 ```
 
 ## What is created
